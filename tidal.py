@@ -1,10 +1,12 @@
+import pypresence
 import psutil
 import win32gui
 import win32process
-import pypresence
 import time
 import sys
 import os
+import requests
+import coverpy
 
 from datetime import datetime
 
@@ -39,7 +41,8 @@ def find_tidal():
 os.system("cls")
 pprint('Connecting to Discord...')
 previous_title = "nun"
-presence = pypresence.Presence("944192427860820039")
+presence = pypresence.Presence("977394302495916062")
+#presence = pypresence.Presence("944192427860820039")
 presence.connect()
 pprint('Connected to discord.')
 time.sleep(1)
@@ -49,27 +52,40 @@ time.sleep(2)
 os.system("cls")
 check = 0
 
+coverpy = coverpy.CoverPy()
+limit = 1
+
 while True:
 	tidal_title = find_tidal()
 	if tidal_title:
 		if tidal_title != previous_title:
 			if tidal_title == "TIDAL":
-				artist = "Not available"
+				artist = "Artist info Not available"
 				song = "Main Menu"
 				state = "Not playing anything"
 				check += 1
 				previous_title = "None"
 				if check >= 50:
 					check = 0
-					presence.update(large_image="logo", large_text="TIDAL Music", details=song, state=artist)
+					presence.update(large_image="tidal", large_text="TIDAL Music", details=song, state=artist)
 					pprint(state)
 					previous_title = tidal_title
 			else:
 				artist = tidal_title.split(" - ")[1]
 				song = tidal_title.split(" - ")[0]
+				try:
+					result = coverpy.get_cover(f"{song} {artist}", limit)
+					#pprint(result.name)
+					artwork = result.artwork(512)
+					#pprint(f"Artwork Found: {artwork}")
+				except coverpy.exceptions.NoResultsException:
+					pprint(f"No Album Art Found for {song}")
+				except requests.exceptions.HTTPError:
+					pprint(f"Could not execute GET request for {song}")
 				state = "Currently Listening to " + song + " by " + artist
 				pprint(state)
-				presence.update(large_image="logo", large_text="TIDAL Music", details=song, state=artist)
+				presence.update(large_image=artwork, large_text=song, small_image="tidal", small_text="TIDAL Music", details=song, state=artist)
+				#presence.update(small_image="tidal", small_text="TIDAL Music")
 				previous_title = tidal_title
 	if not tidal_title:
 		presence.clear()
