@@ -16,4 +16,6 @@ pip install -r requirements.txt
 py tidal.py
 ```
 ## Screenshots
-![image](https://user-images.githubusercontent.com/64765950/169636369-5125ca5a-1d6b-4f8b-ba9f-5845b92acbae.png)
+![image](https://user-images.githubusercontent.com/64765950/174609405-d3166bb2-92ee-4b54-9925-48b8cd8ade52.png)
+
+![image](https://user-images.githubusercontent.com/64765950/174609536-c35696e7-f945-4d45-a125-2d5d954d4cc7.png)
