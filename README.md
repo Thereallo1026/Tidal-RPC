@@ -1,6 +1,9 @@
 # Tidal-RPC
 A Python Program that displays Current Tidal Song info &amp; name in your Discord status with Rich Presence
 
+## Note
+⚠️ An API key is not required for this program ⚠️
+
 ## Requirements
 ```
 Python 3 or newer
